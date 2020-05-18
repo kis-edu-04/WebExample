@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Shouhin;
-import model.ShouhinDAO;
+import model.sankaku;
 
 /**
- * Servlet implementation class ShouhinServlet
+ * Servlet implementation class SankakuServlet
  */
-@WebServlet("/shouhin")
-public class ShouhinServlet extends HttpServlet {
+@WebServlet("/sankaku")
+public class SankakuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinServlet() {
+    public SankakuServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,16 +30,16 @@ public class ShouhinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String teihenstr = request.getParameter("teihen");
+		String takasastr = request.getParameter("takasa");
+		int teihen=Integer.parseInt(teihenstr);
+		int takasa=Integer.parseInt(takasastr);
+		int menseki = teihen*takasa/2;
 
-		String sid = request.getParameter("sid");
-		int s1=Integer.parseInt(sid);
-		ShouhinDAO dao= new ShouhinDAO();
-		Shouhin s=dao.findBySid(s1);
+		sankaku s= new sankaku(teihen,takasa);
+		request.setAttribute("sankaku", s);
 
-
-		request.setAttribute("shouhin", s);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/shouhin.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sankaku.jsp");
 		dispatcher.forward(request, response);
 
 

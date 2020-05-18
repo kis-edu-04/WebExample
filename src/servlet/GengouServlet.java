@@ -9,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Shouhin;
-import model.ShouhinDAO;
+import model.Gengou;
 
 /**
- * Servlet implementation class ShouhinServlet
+ * Servlet implementation class GengouServlet
  */
-@WebServlet("/shouhin")
-public class ShouhinServlet extends HttpServlet {
+@WebServlet("/gengou")
+public class GengouServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinServlet() {
+    public GengouServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +30,16 @@ public class ShouhinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String gengouStr = request.getParameter("gengou");
+		String nenStr = request.getParameter("nen");
+		int gengou =Integer.parseInt(gengouStr);
+		int nen =Integer.parseInt(nenStr);
 
-		String sid = request.getParameter("sid");
-		int s1=Integer.parseInt(sid);
-		ShouhinDAO dao= new ShouhinDAO();
-		Shouhin s=dao.findBySid(s1);
+		Gengou g= new Gengou(gengou,nen);
+		request.setAttribute("gengou", g);
 
-
-		request.setAttribute("shouhin", s);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/shouhin.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/gengou.jsp");
 		dispatcher.forward(request, response);
-
 
 	}
 

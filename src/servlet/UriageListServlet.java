@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Shouhin;
-import model.ShouhinDAO;
+import model.Uriage;
+import model.UriageDAO;
 
 /**
- * Servlet implementation class ShouhinServlet
+ * Servlet implementation class UriageListServlet
  */
-@WebServlet("/shouhin")
-public class ShouhinServlet extends HttpServlet {
+@WebServlet("/ulist")
+public class UriageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinServlet() {
+    public UriageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +33,14 @@ public class ShouhinServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String sid = request.getParameter("sid");
-		int s1=Integer.parseInt(sid);
-		ShouhinDAO dao= new ShouhinDAO();
-		Shouhin s=dao.findBySid(s1);
+		UriageDAO dao= new UriageDAO();
+		ArrayList<Uriage> ulist =dao.findAll();
 
-
-		request.setAttribute("shouhin", s);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/shouhin.jsp");
+		request.setAttribute("list", ulist);
+		
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/ulist.jsp");
 		dispatcher.forward(request, response);
-
-
 	}
 
 	/**
