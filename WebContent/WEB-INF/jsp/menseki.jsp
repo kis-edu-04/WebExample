@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<p>底辺:${sankaku.teihen }</p>
-<p>高さ:${sankaku.takasa }</p>
-<p><a href="menseki">面積はっっっっ…</a></p>
+
+<p>面積:${sankaku.menseki }</p>
 
 </body>
 </html>

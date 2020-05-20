@@ -11,8 +11,8 @@ public class ShouhinDAO {
 	static final String URL = "jdbc:mysql://localhost/hanbai?useSSL=false";
 	static final String USER = "java";
 	static final String PASS = "pass";
-	
-	
+
+
 	public  ArrayList<Shouhin> findAll() {
 		ArrayList<Shouhin> list = new ArrayList<Shouhin>();
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);) {
@@ -21,12 +21,12 @@ public class ShouhinDAO {
 			PreparedStatement stmt = con.prepareStatement(sql);
 
 			ResultSet rs =stmt.executeQuery();
-			
+
 			while(rs.next()) {
 				int sid=rs.getInt("sid");
 			String sname =rs.getString("sname");
 			int tanka =rs.getInt("tanka");
-			
+
 				Shouhin s =new Shouhin(sid,sname,tanka);
 				list.add(s);
 			}
@@ -56,7 +56,7 @@ public class ShouhinDAO {
 		}
 
 	}
-	
+
 	public  void update(Shouhin s ) {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);) {
 
@@ -65,7 +65,7 @@ public class ShouhinDAO {
 			stmt.setString(1, s.getSname());
 			stmt.setInt(2, s.getTanka());
 			stmt.setInt(3,s.getSid());
-			
+
 
 			stmt.executeUpdate();
 
@@ -76,7 +76,7 @@ public class ShouhinDAO {
 		}
 
 	}
-    
+
 	public  Shouhin findBySid(int sid) {
 		Shouhin s=null;
 		try (Connection con = DriverManager.getConnection(URL, USER, PASS);) {
@@ -86,11 +86,11 @@ public class ShouhinDAO {
 			stmt.setInt(1,sid);
 
 			ResultSet rs =stmt.executeQuery();
-			
+
 			if(rs.next()) {
 			String sname =rs.getString("sname");
 			int tanka =rs.getInt("tanka");
-			
+
 			s = new Shouhin (sid,sname,tanka);
 			}
 			stmt.close();
@@ -106,7 +106,7 @@ public class ShouhinDAO {
 			String sql = "DELETE FROM shouhin  WHERE sid=?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, sid);
-			
+
 			stmt.executeUpdate();
 
 			stmt.close();

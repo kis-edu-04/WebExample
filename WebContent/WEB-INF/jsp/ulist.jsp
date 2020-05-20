@@ -16,7 +16,10 @@ table{
 </style>
 </head>
 <body>
-<p><a href="uinsert">売り上げ追加</a></p>
+<h1>売り上げリスト</h1>
+<p>ようこそ、${user.uname }さん (${user.mail })</p>
+<a href="logout">ログアウト</a>
+<a href="uinsert">売り上げ追加</a>
 <table>
 <tr><th>商品ID</th><th>商品名</th><th>商品価格</th><th>日付</th></tr>
 <c:forEach var="uriage" items="${list }">

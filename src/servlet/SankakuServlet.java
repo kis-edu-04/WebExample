@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.sankaku;
 
@@ -34,10 +35,18 @@ public class SankakuServlet extends HttpServlet {
 		String takasastr = request.getParameter("takasa");
 		int teihen=Integer.parseInt(teihenstr);
 		int takasa=Integer.parseInt(takasastr);
-		int menseki = teihen*takasa/2;
+//		int menseki = teihen*takasa/2;
 
 		sankaku s= new sankaku(teihen,takasa);
-		request.setAttribute("sankaku", s);
+//		request.setAttribute("sankaku", s);
+
+		System.out.println("底辺:"+teihen);
+		System.out.println("高さ:"+takasa);
+
+		HttpSession session = request.getSession();
+		session.setAttribute("sankaku", s);
+
+
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sankaku.jsp");
 		dispatcher.forward(request, response);

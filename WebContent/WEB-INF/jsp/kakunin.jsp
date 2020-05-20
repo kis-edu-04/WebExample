@@ -12,8 +12,7 @@
 <form action="insert" method="post">
 <p>名前:<c:out value="${shouhin.sname }"></c:out></p>
 <p>単価:${shouhin.tanka }</p>
-<input type="hidden" name="name" value="${shouhin.sname }">
-<input type="hidden" name="tanka" value="${shouhin.tanka }">
+
 <p>追加しますか?</p>
 <input type="submit" value="追加">
 </form>

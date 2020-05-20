@@ -21,8 +21,9 @@ table{
 </head>
 <body>
 <h1>商品一覧</h1>
-
+<c:if test="${ not empty user}">
 <a href="insert.html">追加</a>
+</c:if>
 <table>
 <tr><th>商品ID</th><th>商品名</th><th>商品価格</th></tr>
 <c:forEach var="shouhin" items="${list }">
@@ -32,9 +33,11 @@ table{
 		<td>${shouhin.sid }</td>
 		<td>${shouhin.sname }</td>
 		<td>${shouhin.tanka }</td>
+		<c:if test="${ not empty user}">
 		<td><a href="del?sid=${shouhin.sid }">削除</a></td>
 		<td><a href="update?sid=${shouhin.sid }">更新</a></td>
-		<td><a href="uriagesid?sid=${shouhin.sid }">売り上げ</a></td>
+		</c:if>
+		<td><a href="uriagesid?sid=${shouhin.sid }">売上</a></td>
 
 
 

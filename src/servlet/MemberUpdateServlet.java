@@ -45,18 +45,29 @@ public class MemberUpdateServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
 
-		String name = request.getParameter("name");
-		String adr = request.getParameter("adr");
-		String midStr = request.getParameter("mid");
-		int mid =Integer.parseInt(midStr);
-		MemberDAO dao= new MemberDAO();
-		Member m =new Member(mid,name,adr);
-		dao.update(m);
+		String action = request.getParameter("action");
 
+		if (action.equals("update")) {
+
+			String name = request.getParameter("name");
+			String adr = request.getParameter("adr");
+			String midStr = request.getParameter("mid");
+			int mid = Integer.parseInt(midStr);
+			MemberDAO dao = new MemberDAO();
+			Member m = new Member(mid, name, adr);
+			dao.update(m);
+
+		} else if (action.equals("del")) {
+			String midStr = request.getParameter("mid");
+			int mid = Integer.parseInt(midStr);
+			MemberDAO dao = new MemberDAO();
+			dao.delete(mid);
+		}
 
 		response.sendRedirect("mlist");
 	}
