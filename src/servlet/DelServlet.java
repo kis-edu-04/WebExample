@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,16 +13,16 @@ import model.Shouhin;
 import model.ShouhinDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class DelServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/del")
+public class DelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public DelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +31,39 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String sidStr = request.getParameter("sid");
 
+		if(sidStr==null) {
+			response.sendRedirect("slist");
+			return;
+		}
+
+		int sid =Integer.parseInt(sidStr);
 		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
+		Shouhin s=dao.findBySid(sid);
 
-		request.setAttribute("list", slist);
+		request.setAttribute("shouhin", s);
 
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/delkakunin.jsp");
 		dispatcher.forward(request, response);
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+
+		String sidStr = request.getParameter("sid");
+
+		int sid =Integer.parseInt(sidStr);
+		ShouhinDAO dao= new ShouhinDAO();
+		dao.delete(sid);
+
+		response.sendRedirect("slist");
+
+
 	}
 
 }

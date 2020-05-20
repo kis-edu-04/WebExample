@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Shouhin;
-import model.ShouhinDAO;
+import model.Member;
+import model.MemberDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class MemberUpdateServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/mupdate")
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public MemberUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,13 +32,13 @@ public class ShouhinListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
+		String midStr = request.getParameter("mid");
+		int mid =Integer.parseInt(midStr);
+		MemberDAO dao =new MemberDAO();
+		Member m =dao.findByMid(mid);
 
-		request.setAttribute("list", slist);
-
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		request.setAttribute("member", m);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mupdate.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +46,19 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		request.setCharacterEncoding("UTF-8");
+
+		String name = request.getParameter("name");
+		String adr = request.getParameter("adr");
+		String midStr = request.getParameter("mid");
+		int mid =Integer.parseInt(midStr);
+		MemberDAO dao= new MemberDAO();
+		Member m =new Member(mid,name,adr);
+		dao.update(m);
+
+
+		response.sendRedirect("mlist");
 	}
 
 }

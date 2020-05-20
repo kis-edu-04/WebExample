@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,16 +13,16 @@ import model.Shouhin;
 import model.ShouhinDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class UpdateServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/update")
+public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public UpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +31,15 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+		String sidStr = request.getParameter("sid");
+		int sid =Integer.parseInt(sidStr);
 		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
+		Shouhin s=dao.findBySid(sid);
 
-		request.setAttribute("list", slist);
+		request.setAttribute("shouhin", s);
 
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/update.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +47,22 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		String sidStr = request.getParameter("sid");
+		String sname = request.getParameter("sname");
+		String tankaStr = request.getParameter("tanka");
+
+		int sid =Integer.parseInt(sidStr);
+
+		int tanka =Integer.parseInt(tankaStr);
+		ShouhinDAO dao= new ShouhinDAO();
+		Shouhin s= new Shouhin(sid,sname,tanka);
+		dao.update(s);
+
+
+		response.sendRedirect("slist");
+
+
 	}
 
 }

@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Shouhin;
-import model.ShouhinDAO;
+import model.Member;
+import model.MemberDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class MemberListServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/mlist")
+public class MemberListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public MemberListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,13 +33,14 @@ public class ShouhinListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
-
-		request.setAttribute("list", slist);
+		MemberDAO dao= new MemberDAO();
+		ArrayList<Member> mlist =dao.findAll();
 
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		request.setAttribute("list", mlist);
+
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mlist.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +48,16 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+
+		String name = request.getParameter("name");
+		String adr = request.getParameter("adr");
+		MemberDAO dao= new MemberDAO();
+		Member m =new Member(0,name,adr);
+		dao.insert(m);
+
+
+		response.sendRedirect("mlist");
 	}
 
 }

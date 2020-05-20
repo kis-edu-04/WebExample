@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +31,33 @@ public class InsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+		request.setCharacterEncoding("UTF-8");
+		String name = request.getParameter("name");
+		String tanka = request.getParameter("tanka");
+		int t1=Integer.parseInt(tanka);
+
+		if(name.length()==0) {
+			request.setAttribute("mes","商品名を入力してください");
+			request.setAttribute("url","insert.html");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+		;
+		Shouhin s1= new Shouhin(0,name,t1);
+
+	    request.setAttribute("shouhin", s1);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/kakunin.jsp");
+		dispatcher.forward(request, response);
+		}catch(NumberFormatException e) {
+			request.setAttribute("mes","単価を入力してください");
+			request.setAttribute("url","insert.html");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -42,6 +68,7 @@ public class InsertServlet extends HttpServlet {
 
 		String name = request.getParameter("name");
 		String tanka = request.getParameter("tanka");
+
 
 		int t1=Integer.parseInt(tanka);
 		ShouhinDAO dao= new ShouhinDAO();

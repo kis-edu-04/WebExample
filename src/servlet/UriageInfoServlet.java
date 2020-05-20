@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,18 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Shouhin;
 import model.ShouhinDAO;
+import model.Uriage;
+import model.UriageDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class UriageInfoServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/uinfo")
+public class UriageInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public UriageInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,13 +34,18 @@ public class ShouhinListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
+		String uidStr = request.getParameter("uid");
+		int uid =Integer.parseInt(uidStr);
+		UriageDAO dao= new UriageDAO();
+		Uriage u= dao.findByUid(uid);
+		request.setAttribute("uriage", u);
+		
+		ShouhinDAO sdao =new ShouhinDAO();
+		Shouhin s = sdao.findBySid(u.getSid());
+		request.setAttribute("shouhin", s);
 
-		request.setAttribute("list", slist);
-
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/uinfo.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +53,8 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+
 	}
 
 }

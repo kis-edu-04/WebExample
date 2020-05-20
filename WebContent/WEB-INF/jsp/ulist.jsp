@@ -5,10 +5,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>売り上げリスト</title>
+<style>
+td,th{
+	border:1px solid gray;
+}
+table{
+	border-collapse:collapse;
+}
+</style>
 </head>
 <body>
-
+<p><a href="uinsert">売り上げ追加</a></p>
 <table>
 <tr><th>商品ID</th><th>商品名</th><th>商品価格</th><th>日付</th></tr>
 <c:forEach var="uriage" items="${list }">
@@ -18,6 +26,8 @@
 		<td>${uriage.sid }</td>
 		<td>${uriage.kosu }</td>
 		<td>${uriage.hi }</td>
+		<td><a href="uinfo?uid=${uriage.uid }">売り上げ詳細</a></td>
+
 
 	</tr>
 

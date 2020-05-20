@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Shouhin;
 import model.ShouhinDAO;
+import model.Uriage;
+import model.UriageDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class UriageServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/uriagesid")
+public class UriageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public UriageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,14 +34,19 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String sidStr = request.getParameter("sid");
+		int sid =Integer.parseInt(sidStr);
 
-		ShouhinDAO dao= new ShouhinDAO();
-		ArrayList<Shouhin> slist =dao.findAll();
+		UriageDAO udao = new UriageDAO();
+		ArrayList<Uriage> u= udao.findBySid(sid);
+		request.setAttribute("list", u);
 
-		request.setAttribute("list", slist);
+		ShouhinDAO sdao = new ShouhinDAO();
+		Shouhin s =sdao.findBySid(sid);
+		request.setAttribute("shouhin", s);
 
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/uriagesid.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +54,17 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+
+		String sidStr = request.getParameter("sid");
+		String kosuStr = request.getParameter("kosu");
+		String url = "uriagesid?sid="+sidStr;
+		int kosu =Integer.parseInt(kosuStr);
+		int sid =Integer.parseInt(sidStr);
+		UriageDAO dao= new UriageDAO();
+		Uriage u= new Uriage (0,sid,kosu,null);
+		dao.insert(u);
+		response.sendRedirect(url);
 	}
 
 }

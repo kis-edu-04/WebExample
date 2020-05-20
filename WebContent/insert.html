@@ -5,9 +5,9 @@
 <title>商品追加</title>
 </head>
 <body>
-<form action="insert" method="post">
-商品名前:<input type="text" name="name"><br>
-商品単価:<input type="text" name="tanka"><br>
+<form action="insert" method="get">
+商品名前:<input type="text" name="name" required placeholder="商品名"><br>
+商品単価:<input type="number" name="tanka" required placeholder="単価"><br>
 <input type="submit" value="送信">
 </form>
 

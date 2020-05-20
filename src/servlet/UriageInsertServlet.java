@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Shouhin;
 import model.ShouhinDAO;
+import model.Uriage;
+import model.UriageDAO;
 
 /**
- * Servlet implementation class ShouhinListServlet
+ * Servlet implementation class UriageInsertServlet
  */
-@WebServlet("/slist")
-public class ShouhinListServlet extends HttpServlet {
+@WebServlet("/uinsert")
+public class UriageInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShouhinListServlet() {
+    public UriageInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +41,7 @@ public class ShouhinListServlet extends HttpServlet {
 		request.setAttribute("list", slist);
 
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/slist.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/uriage.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -47,8 +49,26 @@ public class ShouhinListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+		request.setCharacterEncoding("UTF-8");
+
+		String sidStr = request.getParameter("sid");
+		String kosuStr = request.getParameter("kosu");
+
+		int kosu =Integer.parseInt(kosuStr);
+		int sid =Integer.parseInt(sidStr);
+		UriageDAO dao= new UriageDAO();
+		Uriage u= new Uriage (0,sid,kosu,null);
+		dao.insert(u);
+
+
+		response.sendRedirect("ulist");
+		}catch(NumberFormatException e){
+			request.setAttribute("mes","個数には数字を入力してください");
+			request.setAttribute("url","uinsert");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

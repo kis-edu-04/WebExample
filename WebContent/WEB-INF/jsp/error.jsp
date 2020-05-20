@@ -1,18 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>スッキリ占い</title>
+<title>Insert title here</title>
 </head>
 <body>
+<h1>エラー！！！！</h1>
+<p>${mes}</p>
+<a href="${url}">戻る</a>
 
-<p>${uranai.today}の運勢は${uranai.luck}です</p>
-
-<jsp:include page="/footer.jsp"/>
-<%@ include file="/common.jsp"%>
 </body>
 </html>
