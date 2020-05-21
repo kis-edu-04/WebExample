@@ -3,12 +3,12 @@
 テーブル名:toukou
 
 列名:
-	sid 投稿番号 int
+	tid 投稿番号 int
 				 primary key
 				 auto_increment
 
 	name 投稿者  varchar(45)
 
-	text 本文    text
+	honbun 本文    text
 
-	day  投稿日  Date
+	day  投稿日  Datetime

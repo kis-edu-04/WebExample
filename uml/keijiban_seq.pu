@@ -1,2 +1,14 @@
 @startuml
+title ページ遷移図
+keijiban : 投稿一覧 \n削除 \n投稿
+toukoudel:GET 削除確認\nPOST 削除
+toukouinsert:GET 新しい投稿\nPOST 追加
+
+
+[*]->keijiban
+keijiban-->toukoudel:リンク\ntid
+keijiban-->toukouinsert
+toukoudel-->toukoudel:POST\ntid
+toukouinsert-->toukouinsert:POST\nname\nhonbun
+
 @enduml

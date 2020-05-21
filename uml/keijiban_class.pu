@@ -1,0 +1,31 @@
+@startuml
+package データ{
+	class keijiban{
+		-投稿番号
+		-投稿者
+		-本文
+		-投稿日
+	}
+	class keijibanDAO{
+		+追加(新しい投稿)
+		+削除(投稿の削除)
+		+検索(投稿番号)
+		+全検索()
+
+	}
+}
+package 画面{
+	class 投稿一覧
+	class 削除画面
+	class 新規投稿画面
+}
+
+投稿一覧 ..> keijibanDAO
+新規投稿画面 ..> keijibanDAO
+削除画面 ..> keijibanDAO
+
+
+投稿一覧 -- 削除画面
+投稿一覧 -- 新規投稿画面
+keijibanDAO"1" *-- "0" keijiban
+@enduml
