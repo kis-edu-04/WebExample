@@ -1,0 +1,15 @@
+@startuml
+title 新規投稿 /toukou insert()
+actor ユーザ
+ユーザ ->toukoulist:削除リンククリック
+toukoulist ->ToukoudelServlet:GETリクエスト
+ToukoudelServlet -> toukoudel.jsp:フォワード
+toukoudel.jsp -> ユーザ:確認画面表示
+ユーザ -> toukoudel.jsp:削除ボタンクリック
+toukoudel.jsp -> ToukoudelServlet:POST
+ToukoudelServlet -> ToukouDAO:生成
+ToukoudelServlet -> ToukouDAO:削除
+ToukoudelServlet-> toukoulist:リダイレクト
+toukoulist --> ユーザ:表示
+@enduml
+

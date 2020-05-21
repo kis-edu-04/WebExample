@@ -1,0 +1,15 @@
+@startuml
+title 掲示板閲覧 /toukou findAll()
+actor ユーザ
+ユーザ ->ToukoulistServlet:GETリクエスト
+ToukoulistServlet -> ToukouDAO:生成()
+ToukoulistServlet-> ToukouDAO:findAll()
+ToukouDAO -> Toukou:リストを生成
+ToukouDAO --> ToukoulistServlet--:Toukouリスト
+ToukoulistServlet -> Request:setAttribute(Toukouリスト)
+Request--
+ToukoulistServlet -> toukoulist.jsp:フォワード
+ToukoulistServlet--
+toukoulist.jsp --> ユーザ:表示
+@enduml
+

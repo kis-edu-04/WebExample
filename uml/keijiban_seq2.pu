@@ -1,0 +1,12 @@
+@startuml
+title 新規投稿 /toukou insert()
+actor ユーザ
+ユーザ ->ToukoulistServlet:入力
+ToukoulistServlet ->ToukouinsertServlet:GETリクエスト
+ToukouinsertServlet -> ToukouDAO:生成()
+ToukouinsertServlet -> Toukou:生成()
+ToukouinsertServlet -> ToukouDAO:insert()
+ToukouinsertServlet -> toukoulist:リダイレクト
+
+toukoulist --> ユーザ:表示
+@enduml
